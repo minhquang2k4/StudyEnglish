@@ -19,7 +19,8 @@ public class DrapDrop : MonoBehaviour, IPointerDownHandler, IDragHandler, IBegin
     
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor; 
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        this.transform.SetParent(canvas.transform);
     }
     
     public void OnBeginDrag(PointerEventData eventData)
