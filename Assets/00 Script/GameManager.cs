@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> checkAws = new List<GameObject>();
     public bool result;
     public GameObject Win;
+    public GameObject Lose;
     private int filledSlots;
 
     private void Awake()
@@ -30,6 +31,10 @@ public class GameManager : MonoBehaviour
         if (result)
         {
             Win.gameObject.SetActive(true);
+        }
+        else
+        {
+            Lose.gameObject.SetActive(true);
         }
     }
     
