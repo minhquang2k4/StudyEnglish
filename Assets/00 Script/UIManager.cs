@@ -8,12 +8,15 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] Button[] homeBtt;
     [SerializeField] Button[] restartBtt;
-    [Space] [SerializeField] Button PlayBtt;
+    [SerializeField] Button NextBtt;
+    [SerializeField] Button PlayBtt;
 
     [SerializeField] GameObject Menu;
 
     void Start()
     {
+        if(NextBtt != null)
+            NextBtt.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); });
         if (PlayBtt != null)
             PlayBtt.onClick.AddListener(() => { Menu.SetActive(true); });
         foreach (var home in homeBtt)
@@ -28,10 +31,13 @@ public class UIManager : MonoBehaviour
                 SceneManager.LoadScene("Home");
             });
         }
+
         foreach (var res in restartBtt)
         {
             res.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
         }
+        //if (NextBtt != null)
+        //  NextBtt.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); });
     }
 
     public void OpenLevel(int level)
@@ -39,4 +45,17 @@ public class UIManager : MonoBehaviour
         string levelName = "Level" + level;
         SceneManager.LoadScene(levelName);
     }
+
+    // public void NextLevel()
+    // {
+    //     int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+    //     if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+    //     {
+    //         SceneManager.LoadScene(nextSceneIndex);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("Next scene index is out of range.");
+    //     }
+    // }
 }
