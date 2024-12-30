@@ -8,15 +8,17 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 {
     public string letter;
     public bool isCorrect;
+
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag != null)
         {
-            eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+            eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition =
+                GetComponent<RectTransform>().anchoredPosition;
             eventData.pointerDrag.gameObject.transform.SetParent(transform);
-            if(eventData.pointerDrag.GetComponent<Letter>() != null)
+            if (eventData.pointerDrag.GetComponent<Letter>() != null)
             {
-                if(eventData.pointerDrag.GetComponent<Letter>().letter == letter)
+                if (eventData.pointerDrag.GetComponent<Letter>().letter == letter)
                 {
                     isCorrect = true;
                 }
@@ -30,6 +32,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
                 isCorrect = false;
             }
         }
+
         Debug.Log("OnDrop");
     }
 
