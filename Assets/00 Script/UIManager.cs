@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,56 +7,90 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager instance;
+    public static UIManager Instance => instance;
     [SerializeField] Button[] homeBtt;
     [SerializeField] Button[] restartBtt;
-    [SerializeField] Button NextBtt;
+    [Space] [SerializeField] Button NextBtt;
     [SerializeField] Button PlayBtt;
+    [Space] [SerializeField] GameObject Menu;
+    [Space] [SerializeField] Animator Anim;
 
-    [SerializeField] GameObject Menu;
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
-        if(NextBtt != null)
-            NextBtt.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); });
+        if (NextBtt != null)
+            NextBtt.onClick.AddListener(() =>
+            {
+                StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex + 1));
+            });
         if (PlayBtt != null)
-            PlayBtt.onClick.AddListener(() => { Menu.SetActive(true); });
+            PlayBtt.onClick.AddListener(() => { StartCoroutine(LoadScene(Menu, true)); });
+
         foreach (var home in homeBtt)
         {
             home.onClick.AddListener(() =>
             {
-                if (Menu != null && Menu.activeSelf)
+                if (SceneManager.GetActiveScene().name == "Home")
                 {
-                    Menu.SetActive(false);
+                    if (Menu != null && Menu.activeSelf)
+                    {
+                        StartCoroutine(LoadScene(Menu, false));
+                    }
                 }
-
-                SceneManager.LoadScene("Home");
+                else
+                {
+                    StartCoroutine(LoadScene("Home"));
+                }
             });
         }
 
         foreach (var res in restartBtt)
         {
-            res.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
+            res.onClick.AddListener(() => { StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex)); });
         }
-        //if (NextBtt != null)
-        //  NextBtt.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); });
     }
+
 
     public void OpenLevel(int level)
     {
         string levelName = "Level" + level;
-        SceneManager.LoadScene(levelName);
+        StartCoroutine(LoadScene(levelName));
     }
 
-    // public void NextLevel()
-    // {
-    //     int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-    //     if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-    //     {
-    //         SceneManager.LoadScene(nextSceneIndex);
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning("Next scene index is out of range.");
-    //     }
-    // }
+    public IEnumerator LoadScene(GameObject tager, bool On)
+    {
+        Anim.SetTrigger("End");
+        yield return new WaitForSeconds(1);
+        if (On)
+        {
+            tager.SetActive(true);
+        }
+        else
+        {
+            tager.SetActive(false);
+        }
+
+        Anim.SetTrigger("Start");
+    }
+
+    IEnumerator LoadScene(int tager)
+    {
+        Anim.SetTrigger("End");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(tager);
+        Anim.SetTrigger("Start");
+    }
+
+    IEnumerator LoadScene(string tager)
+    {
+        Anim.SetTrigger("End");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(tager);
+        Anim.SetTrigger("Start");
+    }
 }
