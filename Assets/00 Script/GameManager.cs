@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     public GameObject Win;
     public GameObject Lose;
     private int filledSlots;
+    [Space]
+    [SerializeField] static int Score= 0;
+    [SerializeField] static int highscore= 0;
+    [SerializeField] Text scoreText;
 
     private void Awake()
     {
@@ -35,6 +39,13 @@ public class GameManager : MonoBehaviour
         if (result)
         {
             StartCoroutine(UIManager.Instance.LoadScene(Win, true));
+            Score++;
+            scoreText.text = "Score: " + Score;
+            if (Score > highscore)
+            {
+                highscore = Score;
+                PlayerPrefs.SetInt("HIGHSCORE", highscore);
+            }
         }
         else
         {
