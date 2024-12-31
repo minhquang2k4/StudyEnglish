@@ -3654,12 +3654,9 @@ MonoBehaviour:
   - {fileID: 1583389813}
   - {fileID: 114272403}
   - {fileID: 1195085147}
-  NextBtt: {fileID: 0}
+  NextBtt: {fileID: 673518187}
   PlayBtt: {fileID: 0}
   Menu: {fileID: 0}
-  Win: {fileID: 0}
-  Lose: {fileID: 0}
-  LevelBtt: {fileID: 0}
   Anim: {fileID: 240499616}
 --- !u!1 &1948583618
 GameObject:
