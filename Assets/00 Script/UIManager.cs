@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button[] restartBtt;
     [Space] [SerializeField] Button NextBtt;
     [SerializeField] Button PlayBtt;
+    [SerializeField] Button _HighScoreBtt;
+    [SerializeField] GameObject highScore;
     [Space] [SerializeField] GameObject Menu;
     [Space] [SerializeField] Animator Anim;
 
@@ -41,6 +43,10 @@ public class UIManager : MonoBehaviour
                     {
                         StartCoroutine(LoadScene(Menu, false));
                     }
+                    if(highScore != null && highScore.activeSelf)
+                    {
+                        StartCoroutine(LoadScene(highScore, false));
+                    }
                 }
                 else
                 {
@@ -53,9 +59,14 @@ public class UIManager : MonoBehaviour
         {
             res.onClick.AddListener(() => { StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex)); });
         }
+
+        if (_HighScoreBtt != null)
+        {
+            _HighScoreBtt.onClick.AddListener(() => { StartCoroutine(LoadScene(highScore, true)); });
+
+        }
     }
-
-
+    
     public void OpenLevel(int level)
     {
         string levelName = "Level" + level;
