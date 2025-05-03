@@ -15,9 +15,10 @@ public class GameManager : MonoBehaviour
     public GameObject Win;
     public GameObject Lose;
     private int filledSlots;
-    [Space] [SerializeField] static int Score = 0;
+    [Space] [SerializeField] public static int Score = 0;
     [SerializeField] static int highscore = 0;
     [SerializeField] Text scoreText;
+    string nameHighscore;
 
     private void Awake()
     {
@@ -51,5 +52,11 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(UIManager.Instance.LoadScene(Lose, true));
         }
+    }
+
+    public void ResetScore()
+    {
+        Score = 0;
+        Debug.Log("Score Reset");
     }
 }

@@ -37,13 +37,19 @@ public class UIManager : MonoBehaviour
         {
             home.onClick.AddListener(() =>
             {
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.ResetScore();
+                }
+
                 if (SceneManager.GetActiveScene().name == "Home")
                 {
                     if (Menu != null && Menu.activeSelf)
                     {
                         StartCoroutine(LoadScene(Menu, false));
                     }
-                    if(highScore != null && highScore.activeSelf)
+
+                    if (highScore != null && highScore.activeSelf)
                     {
                         StartCoroutine(LoadScene(highScore, false));
                     }
@@ -63,10 +69,9 @@ public class UIManager : MonoBehaviour
         if (_HighScoreBtt != null)
         {
             _HighScoreBtt.onClick.AddListener(() => { StartCoroutine(LoadScene(highScore, true)); });
-
         }
     }
-    
+
     public void OpenLevel(int level)
     {
         string levelName = "Level" + level;
