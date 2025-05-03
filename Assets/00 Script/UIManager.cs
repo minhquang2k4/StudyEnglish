@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     private static UIManager instance;
     public static UIManager Instance => instance;
     [SerializeField] Button[] homeBtt;
+    [SerializeField] public Button Skip;
+
     [SerializeField] Button[] restartBtt;
     [Space] [SerializeField] Button NextBtt;
     [SerializeField] Button PlayBtt;
@@ -17,6 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject highScore;
     [Space] [SerializeField] GameObject Menu;
     [Space] [SerializeField] Animator Anim;
+
 
     private void Awake()
     {
@@ -69,6 +72,14 @@ public class UIManager : MonoBehaviour
         if (_HighScoreBtt != null)
         {
             _HighScoreBtt.onClick.AddListener(() => { StartCoroutine(LoadScene(highScore, true)); });
+        }
+
+        if (Skip != null)
+        {
+            Skip.onClick.AddListener(() =>
+            {
+                StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex + 1));
+            });
         }
     }
 
